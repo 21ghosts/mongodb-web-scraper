@@ -1,3 +1,4 @@
+//Need to push to heroku
 $(document).ready(() => {
     //need to add loading message that disappears when articles arrive
     $.getJSON("/scrape", (data) => {
