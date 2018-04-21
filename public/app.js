@@ -77,9 +77,7 @@ $(document).ready(() => {
         }
     });
 
-    $(document).on("click", ".comment-view-btn", (event) => {
-        $(this).parent().children(".article-comment").toggle();
-    });
+    $(document).on("click", ".comment-view-btn", (event) => $(this).parent().children(".article-comment").toggle());
 
 
 });

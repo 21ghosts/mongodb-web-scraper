@@ -24,6 +24,9 @@ const Article = require("./models/article.js");
 const User = require("./models/user.js");
 const Comment = require("./models/comment.js");
 
+app.get('/', function(req, res){
+    res.sendFile('index.html')
+});
 // Routes
 app.get("/scrape", (req, res) => {
     request("https://www.nytimes.com/", (error, response, html) => {
@@ -119,7 +122,7 @@ app.get("/comments", function (req, res) {
 });
 
 app.get("/api/comments", function (req, res) {
-    // If I want to limit by user, this might help later on: https://stackoverflow.com/questions/15102532/mongo-find-through-list-of-ids
+    //https://stackoverflow.com/mongo-find-through-list-of-ids
     Comment.find({})
         .populate("article")
         .exec((err, doc) => {
@@ -127,5 +130,5 @@ app.get("/api/comments", function (req, res) {
         });
 });
 
-// Set the app to listen on port 3000
+//listen on port 3000
 app.listen(process.env.PORT || 3000,() => console.log("App running!"));
