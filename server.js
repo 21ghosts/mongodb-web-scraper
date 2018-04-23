@@ -27,6 +27,7 @@ const Comment = require("./models/comment.js");
 app.get('/', function(req, res){
     res.sendFile('index.html')
 });
+
 // Routes
 app.get("/scrape", (req, res) => {
     request("https://www.nytimes.com/", (error, response, html) => {
