@@ -1,5 +1,5 @@
 $(document).ready(() => {
-    //TODO: add a loading message that disappears when articles arrive
+
     $.getJSON("/api/comments", (data) => {
         for (let j = 0; j < data.length; i++) {
             var comment = $('<div>').addClass("comment").attr("comment-id", data[j]._id);

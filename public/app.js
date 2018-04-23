@@ -2,9 +2,9 @@
 $(document).ready(() => {
     //need to add loading message that disappears when articles arrive
     $.getJSON("/scrape", (data) => {
-        // For each one
+        
         for (let i = 0; i < data.length; i++) {
-            // If comments are there, create a div with them to append later
+            
             var comDiv = $('<div>').addClass("view-comments");
             if (data[i].comments.length > 0) {
                 comDiv.append($('<button>').addClass("comment-view-btn btn").text("View comments"));

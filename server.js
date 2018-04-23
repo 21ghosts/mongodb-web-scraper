@@ -1,4 +1,3 @@
-/// Dependencies
 const express = require("express");
 const request = require("request");
 const cheerio = require("cheerio");
@@ -8,18 +7,17 @@ const mongoose = require("mongoose");
 var path = require("path");
 mongoose.Promise = require('bluebird');
 
-// Initialize Express
+
 var app = express();
 
-// Set up a static folder (public) for our web app
+
 app.use(express.static("public"));
 
-// Database configuration
-// Save the URL of our database as well as the name of our collection
+
 var connection = require("./config/connection.js");
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Models
+
 const Article = require("./models/article.js");
 const User = require("./models/user.js");
 const Comment = require("./models/comment.js");
@@ -36,7 +34,7 @@ app.get("/scrape", (req, res) => {
         var i = 0;
         var p = Promise.resolve();
         $("article.story").each((i, element) => {
-            // each step of the each loop waits for the next to finish, and returns a new promise to continue the chain
+            
             p = p.then(function () {
                 var result = {};
                 result.headline = $(element).find("h1.story-heading").text().trim() ||
@@ -68,7 +66,7 @@ app.get("/scrape", (req, res) => {
                                 resolve();
                             }
                         }
-                        // If not duplicate, move or push the enter to the display list
+                     
                         else {
                             if (entry != null) {
                                 enList.push(entry);
@@ -79,11 +77,8 @@ app.get("/scrape", (req, res) => {
                 });
             });
         });
-        p.then(() => {
-            res.send(enList);
-        }).catch((err) => {
-            console.log(err);
-        })
+        p.then(() => res.send(enList)).catch((err) => console.log(err))
+    
     });
 
 });
@@ -100,7 +95,7 @@ app.post("/write", function (req, res) {
             res.send("Sorry, something went wrong with submitting your comment! Please fill out the fields and try again.")
         }
         else {
-            // Find the corresponding article and add the comment
+            
             Article.findByIdAndUpdate(
                 { "_id": req.body.article },
                 { "$push": { "comments": commentDoc._id } },
@@ -123,7 +118,6 @@ app.get("/comments", function (req, res) {
 });
 
 app.get("/api/comments", function (req, res) {
-    //https://stackoverflow.com/mongo-find-through-list-of-ids
     Comment.find({})
         .populate("article")
         .exec((err, doc) => {
